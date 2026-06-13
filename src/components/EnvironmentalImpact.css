@@ -1,0 +1,437 @@
+/* EnvironmentalImpact.css */
+.environmental-impact {
+  min-height: 100vh;
+  background: #f8f9fa;
+  padding: 2rem;
+}
+
+.impact-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.impact-header h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.impact-header p {
+  font-size: 1.2rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.calculator-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #e8f5e8;
+}
+
+.input-section {
+  padding: 2.5rem;
+  background: linear-gradient(135deg, #a8e6cf 0%, #56ab91 50%, #1d976c 100%);
+  color: white;
+}
+
+.input-section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.waste-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.material-icon {
+  font-size: 1.3rem;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+}
+
+.input-group input {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #4CAF50;
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+}
+
+.unit {
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.calculator-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.calculate-btn, .reset-btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.calculate-btn {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+}
+
+.calculate-btn:hover {
+  background: linear-gradient(135deg, #45a049, #3d8b40);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+}
+
+.reset-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid white;
+}
+
+.reset-btn:hover {
+  background: white;
+  color: #1d976c;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+}
+
+.results-section {
+  padding: 2.5rem;
+}
+
+.results-section h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #4CAF50, #2E7D32);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.impact-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.impact-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  border: 3px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.impact-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: inherit;
+}
+
+.impact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.impact-card.co2 {
+  border-color: #4CAF50;
+  background: linear-gradient(135deg, #f1f8e9, #e8f5e8);
+}
+
+.impact-card.co2::before {
+  background: linear-gradient(90deg, #4CAF50, #45a049);
+}
+
+.impact-card.water {
+  border-color: #2196F3;
+  background: linear-gradient(135deg, #e3f2fd, #e1f5fe);
+}
+
+.impact-card.water::before {
+  background: linear-gradient(90deg, #2196F3, #1976D2);
+}
+
+.impact-card.energy {
+  border-color: #FF9800;
+  background: linear-gradient(135deg, #fff3e0, #fff8e1);
+}
+
+.impact-card.energy::before {
+  background: linear-gradient(90deg, #FF9800, #F57C00);
+}
+
+.impact-card.trees {
+  border-color: #8BC34A;
+  background: linear-gradient(135deg, #f9fbe7, #f1f8e9);
+}
+
+.impact-card.trees::before {
+  background: linear-gradient(90deg, #8BC34A, #7CB342);
+}
+
+.impact-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.impact-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.impact-label {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.impact-comparison {
+  font-size: 0.9rem;
+  color: #888;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.impact-summary {
+  background: linear-gradient(135deg, #e8f5e8, #f1f8e9);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 6px solid #4CAF50;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.1);
+}
+
+.impact-summary h3 {
+  color: #2e7d32;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.impact-summary h3::before {
+  content: '💚';
+  font-size: 1.4rem;
+}
+
+.impact-summary p {
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.tips-section {
+  padding: 2.5rem;
+  background: #f8f9fa;
+  border-top: 1px solid #e8f5e8;
+}
+
+.tips-section h3 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.tips-section h3::before {
+  content: '';
+  font-size: 1.5rem;
+}
+
+.tips-section ul {
+  list-style: none;
+  padding: 0;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.tips-section li {
+  padding: 1.2rem;
+  background: white;
+  margin-bottom: 0.8rem;
+  border-radius: 10px;
+  border-left: 4px solid #4CAF50;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.tips-section li:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.15);
+}
+
+.tips-section li::before {
+  content: '🌱';
+  position: absolute;
+  left: -25px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  background: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation for results */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.results-section {
+  animation: slideInUp 0.6s ease-out;
+}
+
+.impact-card {
+  animation: slideInUp 0.6s ease-out;
+}
+
+.impact-card:nth-child(1) { animation-delay: 0.1s; }
+.impact-card:nth-child(2) { animation-delay: 0.2s; }
+.impact-card:nth-child(3) { animation-delay: 0.3s; }
+.impact-card:nth-child(4) { animation-delay: 0.4s; }
+
+@media (max-width: 768px) {
+  .environmental-impact {
+    padding: 1rem;
+  }
+  
+  .impact-header h1 {
+    font-size: 2rem;
+  }
+  
+  .waste-inputs {
+    grid-template-columns: 1fr;
+  }
+  
+  .impact-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .calculator-actions {
+    flex-direction: column;
+  }
+  
+  .calculate-btn, .reset-btn {
+    width: 100%;
+  }
+  
+  .input-section {
+    padding: 2rem 1.5rem;
+  }
+  
+  .results-section {
+    padding: 2rem 1.5rem;
+  }
+  
+  .tips-section {
+    padding: 2rem 1.5rem;
+  }
+  
+  .tips-section li::before {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .impact-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .impact-header p {
+    font-size: 1.1rem;
+  }
+  
+  .impact-value {
+    font-size: 1.7rem;
+  }
+  
+  .impact-card {
+    padding: 1.2rem;
+  }
+}

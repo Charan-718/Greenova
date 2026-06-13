@@ -1,0 +1,273 @@
+/* ItemDetail.css */
+.item-detail {
+  min-height: 100vh;
+  background: #f8f9fa;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.back-button {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  transition: background 0.3s ease;
+  font-size: 1rem;
+}
+
+.back-button:hover {
+  background: #5a6268;
+}
+
+.error-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.error-state h2 {
+  color: #dc3545;
+  margin-bottom: 1rem;
+}
+
+.item-header {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px 15px 0 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2px;
+}
+
+.item-title-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.item-title-section h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin: 0;
+}
+
+.category-badge.large {
+  padding: 0.5rem 1.2rem;
+  border-radius: 25px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.item-description {
+  font-size: 1.2rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.item-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 0 0 15px 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.instructions-section,
+.importance-section,
+.collection-section,
+.tags-section {
+  margin-bottom: 3rem;
+}
+
+.instructions-section h2,
+.importance-section h2,
+.collection-section h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tags-section h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border-left: 4px solid #667eea;
+}
+
+.step-number {
+  background: #667eea;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.step-text {
+  color: #333;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.importance-section p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #555;
+  padding: 1.5rem;
+  background: #fff3cd;
+  border-radius: 10px;
+  border-left: 4px solid #ffc107;
+}
+
+.collection-points {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.collection-point {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+}
+
+.point-icon {
+  font-size: 1.2rem;
+}
+
+.point-name {
+  color: #333;
+  font-weight: 500;
+}
+
+.view-map-button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.view-map-button:hover {
+  background: #218838;
+}
+
+.item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.item-tags .tag {
+  padding: 0.5rem 1rem;
+  background: #e9ecef;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.item-tags .tag:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.help-section {
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.help-section p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.help-button {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.help-button:hover {
+  background: #c82333;
+}
+
+@media (max-width: 768px) {
+  .item-detail {
+    padding: 1rem;
+  }
+  
+  .item-title-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .item-title-section h1 {
+    font-size: 2rem;
+  }
+  
+  .step-item {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .step-number {
+    align-self: flex-start;
+  }
+}
