@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { fetchWasteItems } from '../config/api';
 import './SearchResults.css';
 
-// Mock data - replace with your actual data
-const wasteItems = [
+// Default fallback items
+const defaultWasteItems = [
   {
     id: 1,
     name: 'Pizza Box',
@@ -293,6 +294,8 @@ const SearchResults = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [items, setItems] = useState(defaultWasteItems);
+  const [loading, setLoading] = useState(false);
 
   // Extract search query from URL
   useEffect(() => {
@@ -301,13 +304,49 @@ const SearchResults = () => {
     setSearchQuery(query);
   }, [location]);
 
-  // Filter items based on search query and category
-  const filteredItems = wasteItems.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  // Load items from backend or fallback to default dataset
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+
+    fetchWasteItems(searchQuery, selectedCategory)
+      .then((res) => {
+        if (isMounted) {
+          if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+            setItems(
+              res.data.map(item => ({
+                id: item.itemId || item._id,
+                name: item.name,
+                category: item.category,
+                description: item.description,
+                shortInstructions: item.shortInstructions,
+                tags: item.tags || []
+              }))
+            );
+          } else {
+            // Apply client-side filter on default items
+            const filtered = defaultWasteItems.filter(item => {
+              const query = searchQuery.toLowerCase().trim();
+              const matchesSearch = !query ||
+                item.name.toLowerCase().includes(query) ||
+                item.tags.some(tag => tag.toLowerCase().includes(query)) ||
+                item.description.toLowerCase().includes(query);
+              const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
+              return matchesSearch && matchesCategory;
+            });
+            setItems(filtered);
+          }
+          setLoading(false);
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setLoading(false);
+        }
+      });
+
+    return () => { isMounted = false; };
+  }, [searchQuery, selectedCategory]);
 
   const handleItemClick = (itemId) => {
     navigate(`/item/${itemId}`);
@@ -327,7 +366,9 @@ const SearchResults = () => {
     <div className="search-results">
       <div className="search-header">
         <h1>Search Results</h1>
-        <p className="search-query">Showing results for: "{searchQuery}"</p>
+        <p className="search-query">
+          {searchQuery ? `Showing results for: "${searchQuery}"` : 'Browse all waste categories'}
+        </p>
       </div>
 
       <div className="search-content">
@@ -353,14 +394,14 @@ const SearchResults = () => {
         {/* Results */}
         <div className="results-section">
           <div className="results-count">
-            Found {filteredItems.length} item(s)
+            {loading ? 'Searching database...' : `Found ${items.length} item(s)`}
           </div>
 
-          {filteredItems.length === 0 ? (
+          {items.length === 0 && !loading ? (
             <div className="no-results">
               <h3>No items found</h3>
               <p>Try searching with different keywords or check the spelling.</p>
-              <button 
+              <button
                 onClick={() => navigate('/report')}
                 className="suggest-item-btn"
               >
@@ -369,15 +410,15 @@ const SearchResults = () => {
             </div>
           ) : (
             <div className="results-grid">
-              {filteredItems.map(item => (
-                <div 
-                  key={item.id} 
+              {items.map(item => (
+                <div
+                  key={item.id}
                   className="result-card"
                   onClick={() => handleItemClick(item.id)}
                 >
                   <div className="card-header">
                     <h3 className="item-name">{item.name}</h3>
-                    <span 
+                    <span
                       className="category-badge"
                       style={{ backgroundColor: getCategoryColor(item.category) }}
                     >
@@ -387,7 +428,7 @@ const SearchResults = () => {
                   <p className="item-description">{item.description}</p>
                   <p className="item-instructions">{item.shortInstructions}</p>
                   <div className="item-tags">
-                    {item.tags.map((tag, index) => (
+                    {item.tags && item.tags.map((tag, index) => (
                       <span key={index} className="tag">#{tag}</span>
                     ))}
                   </div>

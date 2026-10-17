@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { fetchWasteItemById } from '../config/api';
 import './ItemDetail.css';
 
-// Mock data - replace with your actual data
+// Default base data
 const itemsData = {
   1: {
     id: 1,
@@ -41,13 +42,88 @@ const itemsData = {
       'Main Recycling Center - 123 Green Street'
     ],
     tags: ['plastic', 'bottle', 'pet', 'recyclable']
+  },
+  3: {
+    id: 3,
+    name: 'Batteries',
+    category: 'Hazardous',
+    description: 'All types of household batteries (AA, AAA, 9V, button cells, rechargeable).',
+    disposalSteps: [
+      'Tape battery terminals with clear electrical tape to prevent short circuits',
+      'Store in a cool, dry place away from flammable materials',
+      'Do not crush, puncture, or burn batteries',
+      'Drop off at designated battery drop-off bins or e-waste events'
+    ],
+    whyImportant: 'Batteries contain heavy metals like lead, mercury, and cadmium which leach into groundwater.',
+    collectionPoints: [
+      'Local Electronics Retailers Drop-Box',
+      'Municipal Hazardous Waste Center',
+      'City Hall Collection Kiosk'
+    ],
+    tags: ['hazardous', 'electronic', 'chemical', 'dangerous']
   }
 };
 
 const ItemDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const item = itemsData[id];
+  const [item, setItem] = useState(itemsData[id] || null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadItem() {
+      setLoading(true);
+      const res = await fetchWasteItemById(id);
+
+      if (isMounted) {
+        if (res.success && res.data) {
+          const apiItem = res.data;
+          setItem({
+            id: apiItem.itemId || apiItem._id,
+            name: apiItem.name,
+            category: apiItem.category,
+            description: apiItem.description,
+            disposalSteps: apiItem.disposalSteps?.length
+              ? apiItem.disposalSteps
+              : [apiItem.shortInstructions || 'Follow proper local waste sorting guidelines.'],
+            whyImportant: apiItem.whyImportant || 'Proper waste segregation maintains community health and recycling efficiency.',
+            collectionPoints: apiItem.collectionPoints?.length
+              ? apiItem.collectionPoints
+              : ['Municipal Collection Bins', 'Local Community Recycling Depot'],
+            tags: apiItem.tags || []
+          });
+        } else if (itemsData[id]) {
+          setItem(itemsData[id]);
+        }
+        setLoading(false);
+      }
+    }
+
+    loadItem();
+    return () => { isMounted = false; };
+  }, [id]);
+
+  const getCategoryColor = (category) => {
+    const colors = {
+      'Recyclable': '#4CAF50',
+      'Biodegradable': '#8BC34A',
+      'Hazardous': '#F44336',
+      'General Waste': '#9E9E9E'
+    };
+    return colors[category] || '#9E9E9E';
+  };
+
+  if (loading && !item) {
+    return (
+      <div className="item-detail">
+        <div style={{ textAlign: 'center', padding: '3rem' }}>
+          <p>Loading waste disposal instructions...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!item) {
     return (
@@ -63,16 +139,6 @@ const ItemDetail = () => {
     );
   }
 
-  const getCategoryColor = (category) => {
-    const colors = {
-      'Recyclable': '#4CAF50',
-      'Biodegradable': '#8BC34A',
-      'Hazardous': '#F44336',
-      'General Waste': '#9E9E9E'
-    };
-    return colors[category] || '#9E9E9E';
-  };
-
   return (
     <div className="item-detail">
       <button onClick={() => navigate(-1)} className="back-button">
@@ -82,7 +148,7 @@ const ItemDetail = () => {
       <div className="item-header">
         <div className="item-title-section">
           <h1>{item.name}</h1>
-          <span 
+          <span
             className="category-badge large"
             style={{ backgroundColor: getCategoryColor(item.category) }}
           >
@@ -97,7 +163,7 @@ const ItemDetail = () => {
         <section className="instructions-section">
           <h2>🔄 How to Dispose Properly</h2>
           <div className="steps-list">
-            {item.disposalSteps.map((step, index) => (
+            {item.disposalSteps && item.disposalSteps.map((step, index) => (
               <div key={index} className="step-item">
                 <span className="step-number">{index + 1}</span>
                 <span className="step-text">{step}</span>
@@ -108,55 +174,32 @@ const ItemDetail = () => {
 
         {/* Why It's Important */}
         <section className="importance-section">
-          <h2>💡 Why This Matters</h2>
+          <h2>🌍 Why Proper Disposal Matters</h2>
           <p>{item.whyImportant}</p>
         </section>
 
         {/* Collection Points */}
         <section className="collection-section">
-          <h2>📍 Where to Dispose</h2>
-          <div className="collection-points">
-            {item.collectionPoints.map((point, index) => (
-              <div key={index} className="collection-point">
-                <span className="point-icon">📌</span>
+          <h2>📍 Where to Take It</h2>
+          <div className="points-list">
+            {item.collectionPoints && item.collectionPoints.map((point, index) => (
+              <div key={index} className="point-item">
+                <span className="point-icon">🏢</span>
                 <span className="point-name">{point}</span>
               </div>
             ))}
           </div>
-          <button 
-            onClick={() => navigate('/map')}
-            className="view-map-button"
-          >
-            View on Map 🗺️
-          </button>
         </section>
 
         {/* Tags */}
         <section className="tags-section">
           <h3>Related Tags</h3>
           <div className="item-tags">
-            {item.tags.map((tag, index) => (
-              <span 
-                key={index} 
-                className="tag"
-                onClick={() => navigate(`/search?q=${tag}`)}
-              >
-                #{tag}
-              </span>
+            {item.tags && item.tags.map((tag, index) => (
+              <span key={index} className="tag">#{tag}</span>
             ))}
           </div>
         </section>
-      </div>
-
-      {/* Help Section */}
-      <div className="help-section">
-        <p>Can't find what you're looking for?</p>
-        <button 
-          onClick={() => navigate('/report')}
-          className="help-button"
-        >
-          Report Missing Item or Problem
-        </button>
       </div>
     </div>
   );

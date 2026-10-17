@@ -242,6 +242,7 @@ const Quiz = () => {
   // Initialize quiz on component mount
   useEffect(() => {
     setCurrentQuiz(generateRandomQuiz());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleAnswerClick = (selectedOption) => {
